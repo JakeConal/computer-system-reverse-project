@@ -29,9 +29,9 @@ Tại breakpoint thứ hai, quan sát thấy một vòng lặp đang được th
     \includegraphics[width=\textwidth]{img/file-3/4.png}
 \end{center}
 
-Vòng lặp này tính tổng mã ASCII của các ký tự trong chuỗi \texttt{Name}. Với chuỗi ví dụ là \texttt{hieu17}, tổng sẽ là:
+Vòng lặp này tính tổng mã ASCII của các ký tự trong chuỗi \texttt{Name} và lưu kết quà vào địa chỉ \texttt{0x442028}. Với chuỗi ví dụ là \texttt{hieu17}, tổng sẽ là:
 \[
-\texttt{68 + 69 + 65 + 75 + 31 + 37 = 27F = 639}
+\texttt{68 + 69 + 65 + 75 + 31 + 37 = 213}
 \]
 
 Quan sát đoạn mã tiếp theo:
@@ -40,9 +40,9 @@ Quan sát đoạn mã tiếp theo:
     \includegraphics[width=\textwidth]{img/file-3/5.png}
 \end{center}
 
-Thực hiện phép toán lấy độ dài chuỗi \texttt{Name} mũ 3 rồi XOR với tổng ASCII vừa tính. Với độ dài là 6, phép toán thực hiện là:
+Thực hiện phép toán lấy độ dài chuỗi \texttt{Name} mũ 3 rồi XOR với tổng ASCII vừa tính và lưu lại vào địa chỉ \texttt{0x442028}. Với độ dài là 6, phép toán thực hiện là:
 \[
-6^3 \;\mathrm{XOR}\; 639 = 216 \;\mathrm{XOR}\; 639 = 679
+6^3 \;\mathrm{XOR}\; 213 = 2CB
 \]
 
 Tiếp tục trace đến địa chỉ \texttt{0x40197D}:
@@ -51,10 +51,10 @@ Tiếp tục trace đến địa chỉ \texttt{0x40197D}:
     \includegraphics[width=\textwidth]{img/file-3/6.png}
 \end{center}
 
-Chương trình lấy mã ASCII của ký tự đầu tiên và ký tự cuối cùng trong chuỗi \texttt{Name}, nhân với nhau, sau đó bình phương kết quả vừa tính. Cuối cùng, kết quả đó được XOR với hằng số \texttt{0xB221}. Cụ thể:
+Chương trình lấy mã ASCII của ký tự đầu tiên và ký tự cuối cùng trong chuỗi \texttt{Name}, nhân với nhau, sau đó bình phương kết quả vừa tính. Cuối cùng, kết quả đó được XOR với hằng số \texttt{B221}. Cụ thể:
 
 \[
-(104 \times 55)^2 \;\mathrm{XOR}\; 45601 = 32718400 \;\mathrm{XOR}\; 45601 = 32707169
+(68 \times 37)^2 \;\mathrm{XOR}\; B221 = 1F38C61
 \]
 
 Tại địa chỉ \texttt{0x4019A4}:
@@ -65,7 +65,7 @@ Tại địa chỉ \texttt{0x4019A4}:
 
 Kết quả từ bước trên sau đó được chia cho giá trị tại vùng nhớ \texttt{0x442028}. Cụ thể: 
 \[
-    32707169 \div 679 = 48271
+    1F38C61 \div 2CB = B2DB
 \] 
 
 Tại breakpoint thứ ba, không có thao tác đặc biệt đáng chú ý. Di chuyển đến breakpoint thứ tư:
@@ -81,18 +81,20 @@ Tại địa chỉ \texttt{0x401D12}, chương trình gọi hàm \texttt{strcmp}
 \end{center}
 
 Tiến hành nhập lại trong chương trình \texttt{3.exe} với \texttt{Name} là \texttt{"hieu17"} và \texttt{Serial} là \texttt{"45787-32738401"} thì xuất hiện thông báo chúc mừng. Như vậy, đây chính là serial hợp lệ tương ứng với chuỗi \texttt{Name = "hieu17"}.
-
-Có thể nhận thấy, phần đầu của serial là kết quả từ phép chia:
+Có thể nhận thấy, phần đầu của key là hệ thập phân của \texttt{B2DB} và phần sau là hệ thập phân của \texttt{1F38C61} mà hai kết quả này ta đã tính ở trên.
+Từ đây suy ra thuật toán keygen như sau:
 \[
-32707169 \div 679 = \underline{48271}
+S = \sum_{i=1}^{n} \mathrm{ascii}(c_i), n > 4
 \]
-Và phần sau là kết quả từ phép XOR:
 \[
-5720^2\ \mathrm{XOR}\ 45601 = \underline{32707169}
+\text{prefix} = \left\lfloor \dfrac{ \left( \mathrm{ascii}(c_1) \cdot \mathrm{ord}(c_n) \right)^2 \;\mathrm{XOR}\; 45601 }{ n^3 \;\mathrm{XOR}\; S } \right\rfloor
 \]
-
-Từ đây suy ra, serial có dạng:
-
+\[
+\text{suffix} = \left( \mathrm{ascii}(c_1) \cdot \mathrm{ascii}(c_n) \right)^2 \;\mathrm{XOR}\; 45601
+\]
+\[
+\text{Key} = \text{"}\texttt{prefix} \text{-} \texttt{suffix}\text{"}
+\]
 
 \subsubsection{Chương trình phát sinh khóa}
 \begin{lstlisting}[language=Python, caption={Chương trình phát sinh khóa}] 
