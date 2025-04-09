@@ -87,7 +87,7 @@ Từ đây suy ra thuật toán keygen như sau:
 S = \sum_{i=1}^{n} \mathrm{ascii}(c_i), n > 4
 \]
 \[
-\text{prefix} = \left\lfloor \dfrac{ \left( \mathrm{ascii}(c_1) \cdot \mathrm{ord}(c_n) \right)^2 \;\mathrm{XOR}\; 45601 }{ n^3 \;\mathrm{XOR}\; S } \right\rfloor
+\text{prefix} = \left\lfloor \dfrac{ \left( \mathrm{ascii}(c_1) \cdot \mathrm{ascii}(c_n) \right)^2 \;\mathrm{XOR}\; 45601 }{ n^3 \;\mathrm{XOR}\; S } \right\rfloor
 \]
 \[
 \text{suffix} = \left( \mathrm{ascii}(c_1) \cdot \mathrm{ascii}(c_n) \right)^2 \;\mathrm{XOR}\; 45601
