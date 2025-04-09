@@ -21,26 +21,27 @@
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
-% Styling for the code.
+% Styling for the code (no line numbers)
 \lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
+    backgroundcolor=\color{backcolour},   % Màu nền nhạt
+    commentstyle=\color{codegreen}\itshape, % Chú thích màu xanh lá, in nghiêng
+    keywordstyle=\color{blue}\bfseries,  % Từ khóa màu xanh dương, in đậm
+    stringstyle=\color{codepurple},      % Chuỗi màu tím
+    basicstyle=\ttfamily\footnotesize,   % Font chữ monospace, kích thước nhỏ
+    breakatwhitespace=false,             % Không ngắt dòng tại khoảng trắng
+    breaklines=true,                     % Tự động ngắt dòng
+    captionpos=b,                        % Vị trí tiêu đề ở dưới
+    keepspaces=true,                     % Giữ khoảng trắng
+    numbers=none,                        % Không hiển thị số dòng
+    frame=single,                        % Khung bao quanh đoạn mã
+    rulecolor=\color{black},             % Màu khung
+    showspaces=false,                    % Không hiển thị khoảng trắng
+    showstringspaces=false,              % Không hiển thị khoảng trắng trong chuỗi
+    showtabs=false,                      % Không hiển thị tab
+    tabsize=4                            % Kích thước tab
 }
 \lstset{style=mystyle}
+
 
 
 % ============ HEADER AND FOOTER ============
