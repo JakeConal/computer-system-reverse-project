@@ -7,7 +7,7 @@
 \begin{center}
     \includegraphics[width=\textwidth]{img/file-2/demo1.PNG}
 \end{center}
-- Chương trình hiển thị một  \texttt{hộp thoại dialog} chứa 2 thuộc tính cần được nhập vào: \texttt{Enter Name} và \texttt{Enter Serial}. Bên dưới cùng bên trái hiển thị \texttt{Button ?} dùng để hiển thị thông báo \texttt{Instructions}, cung cấp thông tin về chương trình và tác giả. Bên dưới cùng bên phải hiển thị Button \texttt{OK} và \texttt{Exit}\\
+- Chương trình hiển thị một  \texttt{hộp thoại dialog} chứa 2 thuộc tính cần được nhập vào: \texttt{Enter Name} và \texttt{Enter Serial}. Bên dưới cùng bên trái hiển thị \texttt{Button '?'} dùng để hiển thị thông báo \texttt{Instructions}, cung cấp thông tin về chương trình và tác giả. Bên dưới cùng bên phải hiển thị Button \texttt{OK} và \texttt{Exit}\\
 \begin{center}
     \includegraphics[width=\textwidth]{img/file-2/demo2.PNG}
 \end{center}
@@ -53,11 +53,11 @@
     \includegraphics[width=\textwidth]{img/file-2/asm2.PNG}
 \end{center}
 - Double-click vào dòng đầu tiên trên màn hình. Lúc này đặt breakpoint tại vị trí đó để phân tích các bước thực thi của chương trình:\\
-+ \textbf{Bước 1}: Nhập thông tin (nếu có) vào 2 thanh thuộc tính của chương trình và nhấn vào OK để tiếp tục. Chưởng trình sẽ đưa hàm GetDlgItemTextA vào thanh ghi EDI để gọi hàm lấy giá trị thuộc tính \texttt{name} và \texttt{Serial}\\
++ \textbf{Bước 1}: Nhập thông tin (nếu có) vào 2 thanh thuộc tính của chương trình và nhấn vào OK để tiếp tục. Chưởng trình sẽ đưa hàm \texttt{GetDlgItemTextA} vào thanh ghi \texttt{EDI} để gọi hàm lấy giá trị thuộc tính \texttt{name} và \texttt{Serial}\\
 \begin{center}
     \includegraphics[width=\textwidth]{img/file-2/asm3.PNG}
 \end{center}
-+ \textbf{Bước 2}: Kiểm tra thuộc tính \texttt{name} có rỗng hay không? Chương trình sẽ kiểm tra bằng lệnh \texttt{TEST}. Lệnh \texttt{TEST} tương tự với lệnh \texttt{AND}, tuy nhiên khác với lệnh \texttt{AND} là sau khi thực hiện phép tính, giá trị sẽ không được lưu vào \texttt{OPERAND}1. Điều này cho phép chương trình so sánh 2 \texttt{OPERAND} mà không thay đổi giá trị của \texttt{OPERAND}. Do đó lệnh \texttt{TEST} thường dùng để so sánh các \texttt{OPERAND} và bật các bit flag tương ứng. Ở đây ta thấy lệnh {\texttt{TEST} EAX,EAX} sẽ thực hiện việc so sánh giá trị của thanh ghi EAX với chính nó, tuy nhiên mục đích của nó thực chất là kiểm tra xem giá trị của thanh ghi EAX có khác 0 hay không. Sau khi thực hiện lệnh \texttt{TEST} trên, bit Z(ERO) sẽ bật lên nếu như thuộc tính \texttt{name} bằng 0, tức là rỗng. Lúc này chương trình sẽ báo "Error: Enter your \texttt{name} before test!"\\
++ \textbf{Bước 2}: Kiểm tra thuộc tính \texttt{name} có rỗng hay không? Chương trình sẽ kiểm tra bằng lệnh \texttt{TEST}. Lệnh \texttt{TEST} tương tự với lệnh \texttt{AND}, tuy nhiên khác với lệnh \texttt{AND} là sau khi thực hiện phép tính, giá trị sẽ không được lưu vào \texttt{OPERAND}1. Điều này cho phép chương trình so sánh 2 \texttt{OPERAND} mà không thay đổi giá trị của \texttt{OPERAND}. Do đó lệnh \texttt{TEST} thường dùng để so sánh các \texttt{OPERAND} và bật các bit flag tương ứng. Ở đây ta thấy lệnh \texttt{TEST EAX,EAX} sẽ thực hiện việc so sánh giá trị của thanh ghi EAX với chính nó, tuy nhiên mục đích của nó thực chất là kiểm tra xem giá trị của thanh ghi EAX có khác 0 hay không. Sau khi thực hiện lệnh \texttt{TEST} trên, bit \texttt{Z} sẽ bật lên nếu như thuộc tính \texttt{name} bằng 0, tức là rỗng. Lúc này chương trình sẽ báo "Error: Enter your \texttt{name} before test!"\\
 \begin{center}
     \includegraphics[width=\textwidth]{img/file-2/asm4.PNG}
 \end{center}
@@ -66,7 +66,7 @@
     \includegraphics[width=\textwidth]{img/file-2/asm5.PNG}
 \end{center}
 + \textbf{Bước 4}: Kiểm tra thuộc tính \texttt{name} có đủ điều kiện hay không?
-Chương trình sẽ kiểm tra bằng cách băm thuộc tính \texttt{name} sử dụng hàm ở dưới. Chi tiết thuật toán sẽ ở phần KEYGEN:\\
+Chương trình sẽ kiểm tra bằng cách băm thuộc tính \texttt{name} sử dụng hàm ở dưới. Chi tiết thuật toán sẽ ở phần \texttt{KEYGEN}:\\
 \begin{center}
     \includegraphics[width=\textwidth]{img/file-2/asm6.PNG}
 \end{center}
@@ -124,8 +124,14 @@ Chương trình sẽ so sánh giá trị hash có được từ thuộc tính \t
 \[
     hash = index
 \]
-+ Ta so sánh giá trị hash của các khoảng với nhau. Điều kiện để thỏa yêu cầu là các giá trị hash của mỗi khoảng phải bằng nhau.
 
 \begin{center}
     \includegraphics[width=\textwidth]{img/file-2/code3.PNG}
 \end{center}
+
++ Ta so sánh giá trị hash của các khoảng với nhau. Điều kiện để thỏa yêu cầu là các giá trị hash của mỗi khoảng phải bằng nhau. Cuối cùng là so sánh với giá trị hash của thuộc tính \texttt{Name} rồi trả về kết quả
+
++ Chương trình \texttt{GENKEY} sử dụng \texttt{Greedy Algorithm} (thuật toán tham lam) để tìm giá trị lớn nhất của thuộc tính \texttt{Serial} dựa trên giá trị hash của thuộc tính \texttt{Name}. Lưu ý rằng có thể có nhiều giá trị thỏa mãn các điều kiện đã đặt ra ở trên, tuy nhiên chương trình GENKY chỉ trả về 1 giá trị \texttt{Serial} tương ứng với mỗi giá trị \texttt{Name} mà người dùng nhập vào. Kết quả sẽ được lưu vào trong file key.txt
+
+\subsubsection{Kết luận}
+- Chương trình trên sử dụng kỹ thuật băm (hashing) để mã hóa dữ liệu mà người dùng nhập vào. Khi đó giá trị \texttt{Name} và \texttt{Serial} được băm thành các giá trị hash dùng cho việc bảo mật dữ liệu, kiểm tra tính hợp lệ của dữ liệu đầu vào, hoặc để so sánh với các giá trị đã lưu trữ từ trước.
