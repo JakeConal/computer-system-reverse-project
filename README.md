@@ -8,7 +8,6 @@ The project focuses on **reverse engineering** a software binary, analyzing its 
 
 ```text
 ├── keygen/       # Key generator and cracking tools
-│   └── crack2.exe
 ├── report/       # Final report and documentation (PDF)
 ├── README.md     # Project overview and metadata
 ├── .gitignore    # Files ignored by Git
